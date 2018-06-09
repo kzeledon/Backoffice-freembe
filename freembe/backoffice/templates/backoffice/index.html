@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<title>Freembe</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% load staticfiles %}
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" > -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+<style>
+body,h1 {font-family: "Raleway", sans-serif}
+body, html {height: 100%}
+.bgimg {
+    background-image: url("{%static 'backoffice/img/background.jpg' %}");
+    min-height: 100%;
+    background-position: center;
+    background-size: cover;
+}
+</style>
+<body>
+
+<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+  <div class="w3-display-topleft w3-padding-large w3-xlarge">
+    FREEMBE
+  </div>
+  <div class="w3-display-middle">
+        <form method='POST' style=" padding:15px 35px 45px ;background-color: #fff;border-radius: 8px; opacity: 0.95; ">
+                {% csrf_token %} 
+                <br>
+                <h4 style="color: black;">Ingrese su correo y contraseña</h4>
+                <br>
+                <div class="form-group">
+                  <label for="inputEmail" class="sr-only">Correo</label>
+                  <input type="email" id="inputEmail" name='email' class="form-control" placeholder="Correo..." required autofocus>
+                </div>
+                <br>
+                <div class="form-group">
+                  <label for="inputPassword" class="sr-only">Contraseña</label>
+                  <input type="password" id="inputPassword" name='password' class="form-control" placeholder="Contraseña.." required>   
+                </div>
+                <br>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" style="background-color: #1D6177; opacity: None; ">Ingresar</button>             
+      </form> 
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Freembe</title>
+    {% load staticfiles %}
+
+ 
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+
+            
+            
+
+             
+            .bg-1 { 
+                    background-color: #34474b; /* Green */
+                    color: #ffffff;
+                }
+ 
+
+            .navbar {
+                margin-bottom: 0;
+                background-color: rgb(29, 97, 119)   ;
+                z-index: 9999;
+                border: 0;
+                font-size: 12px !important;
+                line-height: 1.42857143 !important;
+                letter-spacing: 4px;
+                border-radius: 0;
+            }
+
+            .navbar li a, .navbar .navbar-brand {
+                color: #fff !important;
+            }
+
+            .navbar-nav li a:hover, .navbar-nav li.active a {
+                color: rgb(29, 97, 119)     !important;
+                background-color: #fff !important;
+            }
+
+            .navbar-default .navbar-toggle {
+                border-color: transparent;
+                color: #fff !important;
+            }
+
+        
+
+            .jumbotron {
+                font-family: Montserrat, sans-serif;
+            }
+
+            .navbar {
+                font-family: Montserrat, sans-serif;
+            }
+
+            
+            </style>
+            
+
+</head>
+
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">FREEMBE</a>
+            <ul class="nav navbar-nav navbar-right">
+                <div style="font-size: 2em;">
+                    <li><a href='/freembe/inicio'><span class="fas fa-sign-out-alt"></span></a></li>
+                </div>
+            </ul>
+        </div>
+    </nav>
+
+<div class="container">
+    <div class="jumbotron" >
+            <h1>Bienvenido</h1>
+            <p>En esta sección se presentan elementos para administrar la aplicacion Freembe</p>
+    </div>
+
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#user">Usuarios</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#admin">Administradores</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#anuncios">Anuncios</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#categorias">Categorias</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#subcategorias">Subcategorias</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="user" class="container tab-pane active">
+            <br>
+            <h3>Usuarios</h3>
+            <br>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Email</th>
+                        <th scope='col'>
+
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for U in Users %}
+                            {% if U.role != "Administrator" %}
+                            <tr>
+                                <td>{{ U.name }}</td>
+                                <td>{{ U.email }}</td>
+                                <td>
+                                     <button type="button" class="btn btn-outline-secondary btn-sm" data-id="{{ U.id }}" data-toggle="modal" data-target="#deleteUser">
+                                         <span class="fas fa-times"></span>
+                                     </button>
+                                            
+                                </td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>       
+        </div>
+
+        <div id="admin" class="container tab-pane fade"><br>
+            <h3>Administradores</h3>
+
+            <br>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Email</th>
+                        <th scope='col'>
+                                <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#addAdmin">
+                                        <span class="fas fa-plus"></span>
+                                    </button>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                         {% for U in Users %}
+                            {% if U.role == "Administrator" %}
+                            <tr>
+                                <td>{{ U.name }}</td>
+                                <td>{{ U.email }}</td>
+                                <td>
+                       
+                                </td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <div id="anuncios" class="container tab-pane fade"><br>
+            <h3>Anuncios</h3>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Titulo</th>
+                        <th scope="col">Usuario</th>
+                        <th scope="col">Subcategoria</th>
+                        <th scope='col'>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                         {% for a in Anuncios %}
+                                <tr>
+                                    <td>{{ a.title }}</td>
+                                    <td> {{ a.user.name }} </td>
+                                    <td> {{ a.subcategory.name }} </td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-secondary btn-sm" data-id="{{ a.id }}" data-toggle="modal" data-target="#detailAnuncio">
+                                            <span class="fas fa-info"></span>
+                                        </button>
+                                                
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <br>
+        </div>
+
+        <div id="categorias" class="container tab-pane fade"><br>
+            <h3>Categorias</h3>
+
+            <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope='col'>
+                                    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#addCategory">
+                                            <span class="fas fa-plus"></span>
+                                        </button>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                             {% for c in Categorias %}
+                                <tr>
+                                    <td>{{ c.name }}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-secondary btn-sm" data-id="{{ c.id }}" data-toggle="modal" data-target="#detailCategory">
+                                            <span class="fas fa-info"></span>
+                                        </button>
+                                                
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+        </div>
+        <div id="subcategorias" class="container tab-pane fade"><br>
+            <h3>Subcategorias</h3>
+            <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Categoría</th>
+                            <th scope='col'>
+                                    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#addSub">
+                                            <span class="fas fa-plus"></span>
+                                        </button>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% for s in Sub %}
+                                <tr>
+                                    <td>{{ s.subcategory.name }}</td>
+                                    <td> {{ s.category.name }}
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-secondary btn-sm" data-id="{{ s.id  }}" data-toggle="modal" data-target="#detailSub">
+                                            <span class="fas fa-info"></span>
+                                        </button>
+                                                
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="detailAnuncio" role="dialog" style="padding-top:150px;">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <div id='titleAnuncio'><h4 class="modal-title" ></h4></div>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                    <img class="img-responsive" id="imgAnuncio" style="max-width: 100%; max-height: 50%" src="https://i.imgur.com/G2Tv3aR.jpg" >
+                    <div id="precioAnuncio"><h4></h4></div>
+                    <div id = 'descripcionAnuncio'>
+                    <p></p>
+                    </div>          
+            </div>
+            
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="deleteAnuncioF()" data-dismiss="modal">Eliminar</button>    
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+            
+        </div>
+        </div>
+  </div> 
+
+    
+<div class="modal fade" id="deleteUser" role="dialog" style="padding-top:150px;">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <h4 class="modal-title">Eliminar Usuario</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                 <h5>Esta seguro que quiere eliminar el usuario</h5>
+            </div>
+            
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="deleteUserF()" data-dismiss="modal">Eliminar</button>    
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+            
+        </div>
+        </div>
+  </div>    
+
+  <div class="modal fade" id="addAdmin" role="dialog" style="padding-top:150px;">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <h4 class="modal-title">Nuevo administrador</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                
+                    <form>
+                            <div class="form-group">
+                                    <label for="InputName">Nombre</label>
+                                    <input type="text" class="form-control" id="nameAdmin">
+                            </div>
+                            <div class="form-group">
+                              <label for="InputEmail1">Correo</label>
+                              <input type="email" class="form-control" id="emailAdmin" aria-describedby="emailHelp">
+                            </div>
+                            <div class="form-group">
+                              <label for="InputPassword1">Contraseña</label>
+                              <input type="password" class="form-control" id="passAdmin">
+                              <small id="emailHelp" class="form-text text-muted">La contraseña debe tener al menos una mayuscula, numeros y letras y 8 caracteres</small>
+                            </div>                            
+                    </form>                
+            </div>
+            
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="addAdmin()" data-dismiss="modal">Agregar</button>    
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+            
+        </div>
+        </div>
+  </div>  
+
+  <div class="modal fade" id="addCategory" role="dialog" style="padding-top:150px;">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <h4 class="modal-title">Nueva Categoria</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                
+                    <form>
+                            <div class="form-group">
+                                    <label for="InputName">Nombre</label>
+                                    <input type="text" class="form-control" id="nameCategory">
+                            </div>
+                            <div class="form-group">
+                                    <label for="InputName">Descripción</label>
+                                    <input type="text" class="form-control" id="descriptionCategory">
+                            </div>
+                            <div class="form-group">
+                                <label for="InputName">URL Imagen</label>
+                                <input type="text" class="form-control" id="imgCategory">
+                              <small id="emailHelp" class="form-text text-muted">Debe colocar el url de la imagen</small>
+                            </div>                            
+                    </form>                
+            </div>
+            
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="addCategory()" data-dismiss="modal">Agregar</button>    
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+            
+        </div>
+        </div>
+  </div> 
+
+  <div class="modal fade" id="detailCategory" role="dialog" style="padding-top:150px;">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <h4 class="modal-title">Categoria</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                
+                    <form>
+                            <img class="img-responsive" id="imgCategoryP" style="max-width: 100%; max-height: 100px;" src="" >
+                            <br>
+                            <br>
+                            <div class="form-group">
+                                    <label for="InputName">Nombre</label>
+                                    <input type="text" class="form-control" id="nameCategoryA">
+                            </div>
+                            <div class="form-group">
+                                    <label for="InputName">Descripción</label>
+                                    <input type="text" class="form-control" id="descriptionCategoryA">
+                            </div>
+                            <div class="form-group">
+                                <label for="InputName">URL Imagen</label>
+                                <input type="text" class="form-control" id="imgCategoryA">
+                              <small id="emailHelp" class="form-text text-muted">Debe colocar el url de la imagen</small>
+                            </div>                            
+                    </form>                
+            </div>
+            
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="editCategoryF()" data-dismiss="modal">Editar</button>    
+                <button type="button" class="btn btn-danger"  onclick="deleteCategoryF()" data-dismiss="modal">Eliminar</button>
+            </div>
+            
+        </div>
+        </div>
+  </div> 
+
+
+  <div class="modal fade" id="addSub" role="dialog" style="padding-top:150px;">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <h4 class="modal-title">Nueva SubCategoria</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                
+                    <form name="SubC">
+                            <div class="form-group">
+                                    <label for="InputName">Nombre</label>
+                                    <input type="text" class="form-control" id="nameSub">
+                            </div>
+                            <div class="form-group">
+                                    <label for="InputName">Descripción</label>
+                                    <input type="text" class="form-control" id="descriptionSub">
+                            </div>
+                            <div class="form-group">
+                                <label for="InputName">URL Imagen</label>
+                                <input type="text" class="form-control" id="imgSub">
+                              <small id="emailHelp" class="form-text text-muted">Debe colocar el url de la imagen</small>
+                            </div>  
+
+                            <select name="Cate"> 
+                                    {% for c in Categorias %}
+                                        <option value="{{c.id }}">{{ c.name }}</option>
+                                    {% endfor %} 
+                            </select>
+                                  
+                            
+                            
+                    </form>                
+            </div>
+            
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="addSub()" data-dismiss="modal">Agregar</button>    
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+            
+        </div>
+        </div>
+  </div> 
+
+  <div class="modal fade" id="detailSub" role="dialog" style="padding-top:150px;">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <h4 class="modal-title">SubCategoria</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                
+                    <form name="FormEditSub">
+                            <img class="img-responsive" id="imgSubP" style="max-width: 100%; max-height: 100px;" src="" >
+                            <br>
+                            <br>
+
+                            <div class="form-group">
+                                    <label for="InputName">Nombre</label>
+                                    <input type="text" class="form-control" id="nameSubD">
+                            </div>
+                            <div class="form-group">
+                                    <label for="InputName">Descripción</label>
+                                    <input type="text" class="form-control" id="descriptionSubD">
+                            </div>
+                            <div class="form-group">
+                                <label for="InputName">URL Imagen</label>
+                                <input type="text" class="form-control" id="imgSubD">
+                              <small id="emailHelp" class="form-text text-muted">Debe colocar el url de la imagen</small>
+                            </div>  
+
+                            <select name="SelectCat"> 
+                                    {% for c in Categorias %}
+                                        <option value="{{c.id }}">{{ c.name }}</option>
+                                    {% endfor %} 
+                            </select>
+                                  
+                            <div style="display:none">
+                                    <input type="text" class="form-control" id="idSubD">
+                            </div>
+                            
+                    </form>                
+            </div>
+            
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="editSubF()" data-dismiss="modal">Editar</button>    
+                    <button type="button" class="btn btn-danger"  onclick="deleteSubF()" data-dismiss="modal">Eliminar</button>
+                </div>
+            
+        </div>
+        </div>
+  </div> 
+  
+  <!-- SCRIPT -->
+<script>
+
+    var deleteUserVar= null;
+    var deleteAnuncioVar = null;
+    var deleteCategoryVar = null;
+    var deleteSubVar = null;
+
+    //ADD ADMIN
+
+    function addAdmin(){
+        var nombre = document.getElementById("nameAdmin").value;
+        var email = document.getElementById("emailAdmin").value;
+        var pass = document.getElementById("passAdmin").value;
+
+        var url = 'https://freembe.herokuapp.com/api/users?name='+nombre+'&email='+email+'&password='+pass+'&photo=asdf&type=Administrator';
+        var auth = ' {{ Token }} ';
+
+        var request =  new Request( url, {
+            method: 'POST',
+            Headers: new Headers({'Authorization': auth})
+        });
+
+        fetch(request)
+        .then(function(response) {
+            if (response.ok)
+            {
+                alert("Agregado con exito");
+                window.location.reload(true); 
+            }
+            else
+            {
+                alert("Error");
+            }
+        });
+    }
+
+    //ADD CATEGORY
+
+    function addCategory(){
+        var nombre = document.getElementById("nameCategory").value;
+        var descr = document.getElementById("descriptionCategory").value;
+        var url = document.getElementById("imgCategory").value;
+
+        var url = 'https://freembe.herokuapp.com/api/categoriess?name='+nombre+'&description='+descr+'&photo='+url;
+        var auth = ' {{ Token }} ';
+
+        console.log(url);
+
+        var requestCategory =  new Request( url, {
+            method: 'POST',
+            Headers: new Headers({'Authorization': auth})
+        });
+
+        fetch(requestCategory)
+        .then(function(response) {
+            if (response.ok)
+            {
+                alert("Agregado con exito");
+                window.location.reload(true); 
+            }
+            else
+            {
+                alert("Error");
+            }
+        });
+    }
+
+    //ADD SUBCATEGORY
+
+     function addSub(){
+        var nombre = document.getElementById("nameSub").value;
+        var descr = document.getElementById("descriptionSub").value;
+        var url = document.getElementById("imgSub").value;
+
+        var i = document.SubC.Cate.selectedIndex;
+        var idCat = document.SubC.Cate.options[i].value;
+
+        var url = 'https://freembe.herokuapp.com/api/subcategoriess?name='+nombre+'&description='+descr+'&photo='+url;
+        var auth = ' {{ Token }} ';
+
+        console.log(url);
+
+        var requestCategory =  new Request( url, {
+            method: 'POST',
+            Headers: new Headers({'Authorization': auth})
+        });
+
+        fetch(requestCategory)
+        .then((resp) => resp.json())
+        .then(function(response) {
+           
+            var idSub = response.id;
+            console.log(idCat);
+            console.log(idSub);
+            addSubxCat(idCat, idSub);
+            
+           
+        });
+    }
+
+    function addSubxCat(idCat,idSub)
+    {
+        var url = 'https://freembe.herokuapp.com/api/subcategoriesxcategoriess?category_id='+idCat+'&subcategory_id='+idSub;
+        var auth = ' {{ Token }} ';
+
+         var request=  new Request( url, {
+            method: 'POST',
+            Headers: new Headers({'Authorization': auth})
+        });
+
+        fetch(request)
+        .then(function(response) {
+            if (response.ok)
+            {
+                alert("Agregado con exito");
+                window.location.reload(true); 
+            }
+            else
+            {
+                alert("Error");
+            }
+        });
+    }
+
+    //DELETE USER
+
+    $('#deleteUser').on('show.bs.modal', function(e) {
+        var bookId = $(e.relatedTarget).data('id');
+        deleteUserVar = bookId;
+    });
+
+    function deleteUserF()
+    {
+        if (deleteUserVar!=null)
+        {
+            
+            var url = 'https://freembe.herokuapp.com/api/userss/'.concat(deleteUserVar);
+            var auth = ' {{ Token }} ';
+             var request =  new Request( url, {
+                 method: 'DELETE',
+                 Headers: new Headers({'Authorization': auth})
+            });
+
+            fetch(request)
+            .then(function(response) {
+                if (response.ok)
+                {
+                    alert("Eliminado con exito");
+                    window.location.reload(true); 
+                }
+                else
+                {
+                    alert("Error");
+                }
+            });
+        }
+    }
+
+    //DETAIL SUB
+
+    $('#detailSub').on('show.bs.modal', function(e) {
+        var bookId = $(e.relatedTarget).data('id');
+        deleteSubVar = bookId;
+        getInfoSub(bookId);
+    });
+
+    function getInfoSub(id)
+    {
+        if (id!=null)
+        {
+            var url = 'https://freembe.herokuapp.com/api/subcategoriesxcategoriess/'.concat(id);
+            var auth = ' {{ Token }} ';
+
+             var request =  new Request( url, {
+                 method: 'GET',
+                 Headers: new Headers({'Authorization': auth,
+                                        'Content-Type': 'application/json' })
+            });
+
+            fetch(request)
+            .then((resp) => resp.json())
+            .then(function(data) {
+               document.getElementById('nameSubD').value=`${ data.subcategory.name }`;
+               document.getElementById('descriptionSubD').value=`${ data.subcategory.description }`;
+               document.getElementById('imgSubD').value=`${ data.subcategory.photo }`;
+               document.getElementById('imgSubP').src=`${ data.subcategory.photo }`;
+               document.getElementById('idSubD').value=`${ data.subcategory.id }`;
+            });
+        }
+    }
+
+    //DELETE SUB revisar si hace cascade
+
+    function deleteSubF()
+    {
+        if (deleteSubVar!=null)
+        {
+            var url = 'https://freembe.herokuapp.com/api/subcategoriesxcategoriess/'.concat(deleteSubVar);
+            var auth = ' {{ Token }} ';
+             var request =  new Request( url, {
+                 method: 'DELETE',
+                 Headers: new Headers({'Authorization': auth})
+            });
+
+            fetch(request)
+            .then((resp) => resp.json())
+            .then(function(data) {
+                    id = data.subcategory.id;
+                    deleteSub_aux(id);
+
+                    window.location.reload(true);     
+            });
+        }
+    }
+
+    function deleteSub_aux(id){
+        if (id!=null)
+        {
+            var url = 'https://freembe.herokuapp.com/api/subcategoriess/'.concat(id);
+            var auth = ' {{ Token }} ';
+             var request =  new Request( url, {
+                 method: 'DELETE',
+                 Headers: new Headers({'Authorization': auth})
+            });
+
+            fetch(request)
+            .then(function(response) {
+                if(response.ok)
+                {
+                    alert("Eliminado con exito") 
+                }else
+                {
+                    alert("Error");
+                }
+            });
+        }
+    }
+
+    //EDIT SUBCATEGORIA
+
+    function editSubF()
+    {
+        if (deleteSubVar!=null)
+        {
+
+            var url = 'https://freembe.herokuapp.com/api/subcategoriesxcategoriess/'.concat(deleteSubVar);
+            var url_sub = 'https://freembe.herokuapp.com/api/subcategoriess/';
+    
+            var nombre = document.getElementById('nameSubD').value;
+            var descr= document.getElementById('descriptionSubD').value;
+            var urlImg = document.getElementById('imgSubD').value;
+            var idSub =  document.getElementById('idSubD').value;
+            var i = document.FormEditSub.SelectCat.selectedIndex;
+            var idCat = document.FormEditSub.SelectCat.options[i].value;
+
+            url=url+'?category_id='+idCat+'&subcategory_id='+idSub;
+            url_sub = url_sub.concat(idSub);
+            url_sub = url_sub +'?name='+nombre+'&description='+descr+'&photo='+urlImg
+
+            var auth = ' {{ Token }} ';
+             var request =  new Request( url, {
+                 method: 'PUT',
+                 Headers: new Headers({'Authorization': auth})
+            });
+
+             var request_sub =  new Request( url_sub, {
+                 method: 'PUT',
+                 Headers: new Headers({'Authorization': auth})
+            });
+
+            fetch(request)
+            .then(function(response) {
+                if (response.ok)
+                {
+                    
+                }
+                else
+                {
+                    alert("Error");
+                }
+            });
+
+            fetch(request_sub)
+            .then(function(response) {
+                if (response.ok)
+                {
+                    alert("Editado con exito");
+                    window.location.reload(true);    
+                }
+                else
+                {
+                    alert("Error");
+                }
+            });
+
+
+        }
+    }
+
+    //CATEGORIA
+
+    $('#detailCategory').on('show.bs.modal', function(e) {
+        var bookId = $(e.relatedTarget).data('id');
+        deleteCategoryVar = bookId;
+        getInfoCategory(bookId);
+    });
+
+    function getInfoCategory(id)
+    {
+        if (id!=null)
+        {
+            var url = 'https://freembe.herokuapp.com/api/categoriess/'.concat(id);
+            var auth = ' {{ Token }} ';
+
+             var request =  new Request( url, {
+                 method: 'GET',
+                 Headers: new Headers({'Authorization': auth,
+                                        'Content-Type': 'application/json' })
+            });
+
+            fetch(request)
+            .then((resp) => resp.json())
+            .then(function(data) {
+               document.getElementById('nameCategoryA').value=`${ data.name }`;
+               document.getElementById('descriptionCategoryA').value=`${ data.description }`;
+               document.getElementById('imgCategoryA').value=`${ data.photo }`;
+               document.getElementById('imgCategoryP').src=`${ data.photo }`;
+            });
+        }
+    }
+
+    function deleteCategoryF()
+    {
+        if (deleteCategoryVar!=null)
+        {
+            var url = 'https://freembe.herokuapp.com/api/categoriess/'.concat(deleteCategoryVar);
+            var auth = ' {{ Token }} ';
+             var request =  new Request( url, {
+                 method: 'DELETE',
+                 Headers: new Headers({'Authorization': auth})
+            });
+
+            fetch(request)
+            .then(function(response) {
+                if (response.ok)
+                {
+                    alert("Eliminado con exito");
+                    window.location.reload(true); 
+                }
+                else
+                {
+                    alert("Error");
+                }
+            });
+        }
+    }
+
+     function editCategoryF()
+    {
+        if (deleteCategoryVar!=null)
+        {
+            var url = 'https://freembe.herokuapp.com/api/categoriess/'.concat(deleteCategoryVar);
+    
+            var nombre = document.getElementById('nameCategoryA').value;
+            var descr= document.getElementById('descriptionCategoryA').value;
+            var urlImg = document.getElementById('imgCategoryA').value;
+
+            url=url+'?name='+nombre+'&description='+descr+'&photo='+urlImg;
+
+            var auth = ' {{ Token }} ';
+             var request =  new Request( url, {
+                 method: 'PUT',
+                 Headers: new Headers({'Authorization': auth})
+            });
+
+            fetch(request)
+            .then(function(response) {
+                if (response.ok)
+                {
+                    alert("Editado con exito");
+                    window.location.reload(true); 
+                }
+                else
+                {
+                    alert("Error");
+                }
+            });
+        }
+    }
+
+
+
+
+     $('#detailAnuncio').on('show.bs.modal', function(e) {
+        var bookId = $(e.relatedTarget).data('id');
+        deleteAnuncioVar = bookId;
+        getInfoAnuncio(bookId);
+    });
+
+    function getInfoAnuncio(id)
+    {
+        if (id!=null)
+        {
+            var url = 'https://freembe.herokuapp.com/api/announcementss/'.concat(id);
+            var auth = ' {{ Token }} ';
+
+             var request =  new Request( url, {
+                 method: 'GET',
+                 Headers: new Headers({'Authorization': auth,
+                                        'Content-Type': 'application/json' })
+            });
+
+            fetch(request)
+            .then((resp) => resp.json())
+            .then(function(data) {
+               document.getElementById('titleAnuncio').innerHTML=`${ data.title }`;
+               document.getElementById('precioAnuncio').innerHTML=`${ data.price }`;
+               document.getElementById('descripcionAnuncio').innerHTML=`${ data.description }`;
+               document.getElementById('imgAnuncio').src=`${ data.photo }`;
+            });
+        }
+    }
+
+    function deleteAnuncioF()
+    {
+        if (deleteAnuncioVar!=null)
+        {
+            var url = 'https://freembe.herokuapp.com/api/announcementss/'.concat(deleteAnuncioVar);
+            var auth = ' {{ Token }} ';
+             var request =  new Request( url, {
+                 method: 'DELETE',
+                 Headers: new Headers({'Authorization': auth})
+            });
+
+            fetch(request)
+            .then(function(response) {
+                if (response.ok)
+                {
+                    alert("Eliminado con exito");
+                    window.location.reload(true); 
+                }
+                else
+                {
+                    alert("Error");
+                }
+            });
+        }
+    }
+
+   
+</script>
+
+</body>
+</html>
